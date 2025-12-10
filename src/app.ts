@@ -7,6 +7,8 @@ import authRouter from "./routes/auth";
 
 const app = express();
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
     return res.send("Auth-Service health check 1.0.0");
 });
