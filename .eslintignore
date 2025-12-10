@@ -1,0 +1,8 @@
+dist
+node_modules
+*.spec.ts
+tests/
+.github
+*.js
+.eslintrc.cjs
+jest.config.js

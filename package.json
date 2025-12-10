@@ -27,7 +27,6 @@
         "migration:revert": "npm run typeorm -- migration:revert -d src/config/data-source.ts"
     },
     "devDependencies": {
-        "@eslint/js": "^9.39.1",
         "@types/express": "^5.0.6",
         "@types/http-errors": "^2.0.5",
         "@types/jest": "^30.0.0",
@@ -35,7 +34,10 @@
         "@types/supertest": "^6.0.3",
         "@types/winston": "^2.4.4",
         "cross-env": "^7.0.3",
-        "eslint": "^9.39.1",
+        "@typescript-eslint/eslint-plugin": "^6.6.0",
+        "@typescript-eslint/parser": "^6.6.0",
+        "eslint": "^8.48.0",
+        "eslint-config-prettier": "^9.0.0",
         "husky": "^9.1.7",
         "jest": "^30.2.0",
         "lint-staged": "^14.0.1",
@@ -45,8 +47,7 @@
         "ts-jest": "^29.4.6",
         "ts-node": "^10.9.2",
         "typeorm-ts-node-commonjs": "^0.3.20",
-        "typescript": "^5.9.3",
-        "typescript-eslint": "^8.48.1"
+        "typescript": "^5.9.3"
     },
     "lint-staged": {
         "*.ts": [
