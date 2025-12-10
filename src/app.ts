@@ -1,12 +1,17 @@
+import "reflect-metadata";
+
 import express, { Request, Response, NextFunction } from "express";
 import logger from "./config/logger";
 import { HttpError } from "http-errors";
+import authRouter from "./routes/auth";
 
 const app = express();
 
 app.get("/", (req, res) => {
     return res.send("Auth-Service health check 1.0.0");
 });
+
+app.use("/auth", authRouter);
 
 // global middleware add -
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
