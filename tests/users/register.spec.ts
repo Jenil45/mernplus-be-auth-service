@@ -149,6 +149,31 @@ describe("POST /auth/register", () => {
 
             // expect(users[0].role).toBe(ROLES.CUSTOMER);
         });
+
+        it("Should return 400 status code if email is already exists", async () => {
+            // Arrange
+            const userData = {
+                firstName: "Jenil",
+                lastName: "Thakor",
+                email: "jenil.rohi45@gmail.com",
+                password: "Rb!-4593",
+            };
+
+            // insert dummy user
+            const userRepository = connection.getRepository(User);
+
+            await userRepository.save({ ...userData, role: "customer" });
+
+            // Act
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            // Assert
+            const users = await userRepository.find();
+            expect(response.statusCode).toBe(400);
+            expect(users).toHaveLength(1);
+        });
     });
 
     describe("Fields are missing", () => {});
