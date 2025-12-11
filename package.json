@@ -27,15 +27,16 @@
         "migration:revert": "npm run typeorm -- migration:revert -d src/config/data-source.ts"
     },
     "devDependencies": {
+        "@types/bcrypt": "^6.0.0",
         "@types/express": "^5.0.6",
         "@types/http-errors": "^2.0.5",
         "@types/jest": "^30.0.0",
         "@types/node": "^24.10.1",
         "@types/supertest": "^6.0.3",
         "@types/winston": "^2.4.4",
-        "cross-env": "^7.0.3",
         "@typescript-eslint/eslint-plugin": "^6.6.0",
         "@typescript-eslint/parser": "^6.6.0",
+        "cross-env": "^7.0.3",
         "eslint": "^8.48.0",
         "eslint-config-prettier": "^9.0.0",
         "husky": "^9.1.7",
@@ -56,6 +57,7 @@
         ]
     },
     "dependencies": {
+        "bcrypt": "^6.0.0",
         "dotenv": "^17.2.3",
         "express": "^5.2.1",
         "http-errors": "^2.0.1",
