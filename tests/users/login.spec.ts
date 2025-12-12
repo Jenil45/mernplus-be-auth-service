@@ -25,6 +25,31 @@ describe("POST /auth/login", () => {
     });
 
     describe("Given all fields", () => {
+        it("should return 200 status code for successful login", async () => {
+            // Arrange
+            const userData = {
+                firstName: "Jenil",
+                lastName: "Thakor",
+                email: "jenil.rohi45@gmail.com",
+                password: "Rb!-4593",
+            };
+
+            const hashedPassword = await bcrypt.hash(userData.password, 10);
+            const userRepository = connection.getRepository(User);
+            await userRepository.save({
+                ...userData,
+                password: hashedPassword,
+                role: ROLES.CUSTOMER,
+            });
+
+            // Act
+            const response = await request(app)
+                .post("/auth/login")
+                .send({ email: userData.email, password: userData.password });
+
+            // Assert
+            expect(response.statusCode).toBe(200);
+        });
         it("should return the access token and refresh token inside a cookie", async () => {
             // Arrange
             const userData = {

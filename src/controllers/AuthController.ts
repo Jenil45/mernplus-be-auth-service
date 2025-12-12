@@ -157,7 +157,7 @@ export class AuthController {
             });
 
             // return to response (id)
-            res.status(201).json({ id: user.id });
+            res.status(200).json({ id: user.id });
         } catch (error) {
             next(error);
             return;
