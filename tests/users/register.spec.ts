@@ -6,6 +6,8 @@ import { AppDataSource } from "../../src/config/data-source";
 import { truncateTables } from "../utils";
 import { User } from "../../src/entities/User";
 import { ROLES } from "../../src/constants";
+import { cookie } from "express-validator";
+import { isJwt } from "../../src/utils";
 
 describe("POST /auth/register", () => {
     let connection: DataSource;
@@ -173,6 +175,45 @@ describe("POST /auth/register", () => {
             const users = await userRepository.find();
             expect(response.statusCode).toBe(400);
             expect(users).toHaveLength(1);
+        });
+
+        it("Should return the access token and refresh token inside a cookie", async () => {
+            // Arrange
+            const userData = {
+                firstName: "Jenil",
+                lastName: "Thakor",
+                email: "jenil.rohi45@gmail.com",
+                password: "Rb!-4593",
+            };
+
+            // Act
+            const response = await request(app)
+                .post("/auth/register")
+                .send(userData);
+
+            interface Headers {
+                ["set-cookie"]?: string[];
+            }
+
+            // Assert
+            let accessToken: string | null = null;
+            let refreshToken: string | null = null;
+            const cookies = (response.headers as Headers)["set-cookie"] || [];
+
+            cookies.forEach((cookie) => {
+                if (cookie.startsWith("accessToken=")) {
+                    accessToken = cookie.split(";")[0].split("=")[1];
+                }
+                if (cookie.startsWith("refreshToken=")) {
+                    refreshToken = cookie.split(";")[0].split("=")[1];
+                }
+            });
+
+            expect(accessToken).not.toBeNull();
+            expect(refreshToken).not.toBeNull();
+
+            expect(isJwt(accessToken)).toBeTruthy();
+            expect(isJwt(refreshToken)).toBeTruthy();
         });
     });
 

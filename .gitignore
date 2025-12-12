@@ -1,3 +1,6 @@
+# certificcate file
+certs/
+
 # Logs
 logs
 *.log
