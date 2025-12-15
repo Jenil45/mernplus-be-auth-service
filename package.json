@@ -21,9 +21,9 @@
         "test:prod": "jest --watch --runInBand",
         "prepare": "husky",
         "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
-        "migration:create": "npm run typeorm -- migration:create src/migrations/Init",
-        "migration:generate": "npm run typeorm -- migration:generate src/migrations/AutoMigration -d src/config/data-source.ts",
-        "migration:run": "npm run typeorm -- migration:run -d src/config/data-source.ts",
+        "migration:generate": "typeorm-ts-node-commonjs migration:generate",
+        "migration:run": "typeorm-ts-node-commonjs migration:run",
+        "migration:create": "typeorm-ts-node-commonjs migration:create",
         "migration:revert": "npm run typeorm -- migration:revert -d src/config/data-source.ts"
     },
     "devDependencies": {
