@@ -1,5 +1,6 @@
 # certificcate file
 certs/
+public/
 
 # Logs
 logs

@@ -77,5 +77,64 @@ describe("POST /auth/self", () => {
             // check if user id matches with registered user
             expect((response.body as Record<string, string>).id).toBe(data.id);
         });
+
+        it("should not return the password field in user data", async () => {
+            // Register user
+            const userData = {
+                firstName: "Jenil",
+                lastName: "Thakor",
+                email: "jenil.rohi45@gmail.com",
+                password: "Rb!-4593",
+            };
+            const userRepo = connection.getRepository(User);
+            const data = await userRepo.save({
+                ...userData,
+                role: ROLES.CUSTOMER,
+            });
+
+            // Generate token
+            const accessToken = jwks.token({
+                sub: String(data.id),
+                role: data.role,
+            });
+
+            // Add token to cookie
+
+            // Act - Send token as well
+            const response = await request(app)
+                .get("/auth/self")
+                .set("Cookie", [`accessToken=${accessToken};`])
+                .send();
+
+            // Assert
+
+            // check if user id matches with registered user
+            expect(response.body as Record<string, string>).not.toHaveProperty(
+                "password",
+            );
+        });
+
+        it("should return 401 status code if token does not exist", async () => {
+            // Register user
+            const userData = {
+                firstName: "Jenil",
+                lastName: "Thakor",
+                email: "jenil.rohi45@gmail.com",
+                password: "Rb!-4593",
+            };
+            const userRepo = connection.getRepository(User);
+            const data = await userRepo.save({
+                ...userData,
+                role: ROLES.CUSTOMER,
+            });
+
+            // Act - Send token as well
+            const response = await request(app).get("/auth/self").send();
+
+            // Assert
+
+            // check if user id matches with registered user
+            expect(response.statusCode).toBe(401);
+        });
     });
 });
