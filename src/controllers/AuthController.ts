@@ -168,4 +168,56 @@ export class AuthController {
         const user = await this.userService.findById(Number(req.auth.sub));
         res.status(200).json(user);
     }
+
+    async refresh(req: AuthRequest, res: Response, next: NextFunction) {
+        try {
+            const payload: JwtPayload = {
+                sub: String(req.auth.sub),
+                role: req.auth.role,
+            };
+
+            const accessToken = this.tokenService.generateAccessToken(payload);
+
+            const user = await this.userService.findById(Number(req.auth.sub));
+
+            if (!user) {
+                const err = createHttpError(
+                    400,
+                    "User with token could not find",
+                );
+                next(err);
+                return;
+            }
+
+            // Persist the refresh token
+            const newRefreshToken =
+                await this.tokenService.persistRefreshToken(user);
+
+            // Delete old refresh token
+            await this.tokenService.deleteRefreshToken(Number(req.auth.id));
+
+            const refreshToken = this.tokenService.generateRefresehToken({
+                ...payload,
+                id: newRefreshToken.id,
+            });
+
+            res.cookie("accessToken", accessToken, {
+                domain: "localhost",
+                sameSite: "strict",
+                maxAge: 1000 * 60 * 60, // 1 hr
+                httpOnly: true,
+            });
+            res.cookie("refreshToken", refreshToken, {
+                domain: "localhost",
+                sameSite: "strict",
+                maxAge: 1000 * 60 * 60 * 24 * 365, // 1 yr
+                httpOnly: true,
+            });
+
+            res.status(200).json({});
+        } catch (error) {
+            next(error);
+            return;
+        }
+    }
 }
