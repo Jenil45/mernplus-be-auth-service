@@ -23,7 +23,7 @@ export interface CreateTenantRequest extends Request {
 export interface AuthRequest extends Request {
     auth: {
         sub: string;
-        role: number;
+        role: string;
         id?: string;
     };
 }

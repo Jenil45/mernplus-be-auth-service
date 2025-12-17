@@ -92,5 +92,29 @@ describe("POST /tenants", () => {
             const tenants = await tenantRepo.find({});
             expect(tenants).toHaveLength(0);
         });
+
+        it("should return 403 if user is not an admin", async () => {
+            // Arrange
+            const tenantData = {
+                name: "Tenant name",
+                address: "Tenant address",
+            };
+
+            adminToken = jwks.token({
+                sub: "1",
+                role: ROLES.MANAGER,
+            });
+
+            // Act
+            const response = await request(app)
+                .post("/tenants")
+                .set("Cookie", [`accessToken=${adminToken};`])
+                .send(tenantData);
+            expect(response.statusCode).toBe(403);
+            // Assert
+            const tenantRepo = connection.getRepository(Tenant);
+            const tenants = await tenantRepo.find({});
+            expect(tenants).toHaveLength(0);
+        });
     });
 });
