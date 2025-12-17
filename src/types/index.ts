@@ -5,6 +5,8 @@ export interface UserData {
     lastName: string;
     email: string;
     password: string;
+    role: string;
+    tenantId?: number;
 }
 
 export interface ITenant {
@@ -35,4 +37,20 @@ export type AuthCookie = {
 
 export interface IRefreshTokenPayload {
     id: string;
+}
+
+export interface CreateUserRequest extends Request {
+    body: UserData;
+}
+
+export interface LimitedUserData {
+    firstName: string;
+    lastName: string;
+    role: string;
+    email: string;
+    tenantId: number;
+}
+
+export interface UpdateUserRequest extends Request {
+    body: LimitedUserData;
 }

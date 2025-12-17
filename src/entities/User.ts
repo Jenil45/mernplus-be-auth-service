@@ -19,7 +19,7 @@ export class User {
     password: string;
 
     @ManyToOne(() => Tenant)
-    tenant: Tenant;
+    tenant: Tenant | null;
 
     @Column()
     role: string;

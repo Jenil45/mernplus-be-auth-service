@@ -1,4 +1,4 @@
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { CreateTenantRequest } from "../types";
 import { validationResult } from "express-validator";
 import { Logger } from "winston";
@@ -57,7 +57,7 @@ export class TenantController {
         }
     }
 
-    async getAll(req: CreateTenantRequest, res: Response, next: NextFunction) {
+    async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const tenants = await this.tenantService.getAll();
             this.logger.info("All tenant have been fetched");
@@ -67,7 +67,7 @@ export class TenantController {
         }
     }
 
-    async getOne(req: CreateTenantRequest, res: Response, next: NextFunction) {
+    async getOne(req: Request, res: Response, next: NextFunction) {
         const tenantId = req.params.id;
         if (isNaN(Number(tenantId))) {
             next(createHttpError(400, "Invalid url param"));
@@ -91,7 +91,7 @@ export class TenantController {
         }
     }
 
-    async destroy(req: CreateTenantRequest, res: Response, next: NextFunction) {
+    async destroy(req: Request, res: Response, next: NextFunction) {
         const tenantId = req.params.id;
         if (isNaN(Number(tenantId))) {
             next(createHttpError(400, "Invalid url param"));
