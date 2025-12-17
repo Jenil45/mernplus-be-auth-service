@@ -25,4 +25,33 @@ router.post(
         tenantController.create(req, res, next),
 );
 
+router.patch(
+    "/:id",
+    authenticate,
+    canAccess([ROLES.ADMIN]),
+    tenantValidator,
+    (req: Request, res: Response, next: NextFunction) =>
+        tenantController.update(req, res, next),
+);
+
+router.get("/", (req: Request, res: Response, next: NextFunction) =>
+    tenantController.getAll(req, res, next),
+);
+
+router.get(
+    "/:id",
+    authenticate,
+    canAccess([ROLES.ADMIN]),
+    (req: Request, res: Response, next: NextFunction) =>
+        tenantController.getOne(req, res, next),
+);
+
+router.delete(
+    "/:id",
+    authenticate,
+    canAccess([ROLES.ADMIN]),
+    (req: Request, res: Response, next: NextFunction) =>
+        tenantController.destroy(req, res, next),
+);
+
 export default router;
