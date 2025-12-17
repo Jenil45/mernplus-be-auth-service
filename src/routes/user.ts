@@ -34,8 +34,12 @@ router.patch(
         userController.update(req, res, next),
 );
 
-router.get("/", (req: Request, res: Response, next: NextFunction) =>
-    userController.getAll(req, res, next),
+router.get(
+    "/",
+    authenticate,
+    canAccess([ROLES.ADMIN]),
+    (req: Request, res: Response, next: NextFunction) =>
+        userController.getAll(req, res, next),
 );
 
 router.get(

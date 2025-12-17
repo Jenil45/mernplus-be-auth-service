@@ -69,6 +69,20 @@ export class UserService {
         userId: number,
         { firstName, lastName, role, email, tenantId }: LimitedUserData,
     ) {
+        const user = await this.findById(userId);
+        if (!user) {
+            const error = createHttpError(404, "User does not exist");
+            throw error;
+        }
+
+        if (user?.email !== email) {
+            const existingUser = await this.findByEmail(email);
+            if (existingUser) {
+                const error = createHttpError(400, "Email is already exist");
+                throw error;
+            }
+        }
+
         try {
             return await this.userRepository.update(userId, {
                 firstName,
