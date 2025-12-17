@@ -5,6 +5,7 @@ import logger from "../config/logger";
 import { TenantService } from "../services/TenantsService";
 import { AppDataSource } from "../config/data-source";
 import { Tenant } from "../entities/Tenant";
+import authenticate from "../middlewares/authenticate";
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ const tenantController = new TenantController(tenantService, logger);
 
 router.post(
     "/",
+    authenticate,
     tenantValidator,
     (req: Request, res: Response, next: NextFunction) =>
         tenantController.create(req, res, next),
