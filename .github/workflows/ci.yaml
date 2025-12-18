@@ -21,6 +21,7 @@ jobs:
       - name: Run eslint
         run: npm run lint:check
       - name: Test and coverage
+        run: echo ${{secrets.TEST_DB_HOST}}
         run: npm run test
         env: 
           DB_HOST: ${{secrets.TEST_DB_HOST}}
