@@ -32,7 +32,7 @@ describe("PATCH /tenants/:id", () => {
         });
 
         tenantData = {
-            name: "Tenant name",
+            name: "Tenant name 2",
             address: "Tenant address",
         };
 
