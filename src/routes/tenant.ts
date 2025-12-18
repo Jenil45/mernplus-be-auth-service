@@ -12,7 +12,6 @@ import { ROLES } from "../constants";
 const router = express.Router();
 
 const tenantRepository = AppDataSource.getRepository(Tenant);
-// const refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
 const tenantService = new TenantService(tenantRepository);
 const tenantController = new TenantController(tenantService, logger);
 

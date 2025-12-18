@@ -6,7 +6,9 @@ import { User } from "../entities/User";
 import { Repository } from "typeorm";
 
 export class TokenService {
-    constructor(private refreshTokenRepository: Repository<RefreshToken>) {}
+    constructor(
+        private readonly refreshTokenRepository: Repository<RefreshToken>,
+    ) {}
 
     generateAccessToken(payload: JwtPayload) {
         let privateKey: string;
@@ -15,7 +17,6 @@ export class TokenService {
             throw error;
         }
         try {
-            // privateKey = fs.readFileSync(path.join(__dirname, "../../certs/private.pem"));
             privateKey = Config.PRIVATE_KEY;
         } catch (error) {
             const err = createHttpError(500, "Error while reading private key");
