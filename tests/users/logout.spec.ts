@@ -6,9 +6,8 @@ import { User } from "../../src/entities/User";
 import { ROLES } from "../../src/constants";
 import createJWKSMock from "mock-jwks";
 import { RefreshToken } from "../../src/entities/RefreshToken";
-import { JwtPayload, sign } from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import { Config } from "../../src/config";
-import { isJwt } from "../../src/utils";
 
 describe("POST /auth/logout", () => {
     let connection: DataSource;
