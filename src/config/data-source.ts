@@ -11,6 +11,9 @@ export const AppDataSource = new DataSource({
     password: Config.DB_PASSWORD,
     database: Config.DB_NAME,
     // Don't use this in production. Always keep false
+    ssl: {
+        rejectUnauthorized: false, // REQUIRED for Neon
+    },
     synchronize: Config.NODE_ENV === "test",
     logging: false,
     entities: [path.join(__dirname, "../entities/*.{ts,js}")],
