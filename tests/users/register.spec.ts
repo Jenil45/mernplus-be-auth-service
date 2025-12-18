@@ -7,14 +7,12 @@ import { User } from "../../src/entities/User";
 import { RefreshToken } from "../../src/entities/RefreshToken";
 import { ROLES } from "../../src/constants";
 import { isJwt } from "../../src/utils";
-import { Config } from "../../src/config";
 
 describe("POST /auth/register", () => {
     let connection: DataSource;
 
     beforeAll(async () => {
         connection = await AppDataSource.initialize();
-        console.log("DB Connection: ", Config.DB_HOST);
     });
 
     beforeEach(async () => {
