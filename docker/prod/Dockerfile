@@ -26,6 +26,6 @@ RUN npm ci --ignore-scripts --legacy-peer-deps
 
 COPY --from=builder /app/dist ./
 
-EXPOSE 5500
+EXPOSE 5501
 
 CMD ["node", "src/server.js"]
