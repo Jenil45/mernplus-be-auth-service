@@ -9,6 +9,7 @@ import { UserService } from "../services/UserService";
 import { AppDataSource } from "../config/data-source";
 import { User } from "../entities/User";
 import updateUserValidator from "../validators/update-user-validator";
+import listUserValidator from "../validators/list-user-validator";
 
 const router = express.Router();
 
@@ -38,6 +39,7 @@ router.get(
     "/",
     authenticate,
     canAccess([ROLES.ADMIN]),
+    listUserValidator,
     (req: Request, res: Response, next: NextFunction) =>
         userController.getAll(req, res, next),
 );
